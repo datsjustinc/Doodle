@@ -10,7 +10,7 @@ public class CharacterMovement : MonoBehaviour
     bool spring = false; // create control variable for power-up
     bool trampoline = false; // create control variable for power-up
     bool springShoes = false; // create control variable for power-up
-    int springShoesCount = 0; // create variable to keep track of shoes lifespan
+    public int springShoesCount = 0; // create variable to keep track of shoes lifespan
     float moveX = 1.0f; // create value to store object's move direction
     public Joint2D joint; // create variable to store joint component used to attach character to spring shoe power-up
     public GroundComponent platform; // create variable to store script GroundComponent in Platform object
@@ -41,24 +41,38 @@ public class CharacterMovement : MonoBehaviour
             trampoline = false; // set spring bounce to false so it can be triggered again
         }
 
-        if (springShoes) // if key pressed
+        if (springShoes) // this could be the springShoesCount, and start from range(6, 0), then reset to 6
         {
-            if (springShoesCount < 6)
+            if (platform.isGrounded == true) // if spring shoes object has touched the platform
             {
-                if (platform.isGrounded == true)
+                jumpPower = 15.0f; // boost jump power from power-up
+                Jump(); // skip directly to character jump
+                springShoesCount += 1;  // keep track of spring shoes jump amount
+                platform.isGrounded = false; // reset jump once character jumps
+
+                if (springShoesCount >= 6) // if spring shoes object has reached its max use/lifespan
                 {
-                    jumpPower = 10.0f; // boost jump power from power-up
-                    Jump(); // skip directly to player jump
-                    springShoes = false; // set spring shoes bounce to false so it can be triggered again
-                    springShoesCount += 1; 
+                    springShoes = false; // stop the power-up
+                    springShoesCount = 0; // reset power-up jump amount
+
+                    if (platform.isGrounded == false)
+                    {
+                        Destroy(joint); // breaks spring shoes from character
+                    }
                 }
             }
         }
 
-
         moveX = Input.GetAxis("Horizontal"); // get movement input direction (-1, 1)
         //MOVEX = Input.GetAxis("Horizontal");
-    } 
+    }
+    
+    
+    /* //can be used to disguise a variable as another type and condition without literally having to change it, keeps style and pattern of codes consistent
+    bool SpringShoes {
+        get => springShoesCount > 0;
+    }
+    */
 
     void Jump()
     {
@@ -95,10 +109,16 @@ public class CharacterMovement : MonoBehaviour
             rb.rotation = 0.0f; 
             
             transform.position = new Vector3(collision.transform.position.x, collision.transform.position.y + 0.864327f, collision.transform.position.z);
-            springShoes = true; // set spring shoes on character to true
             
             joint = gameObject.AddComponent<FixedJoint2D>(); // create new fixed joint component on character
             joint.connectedBody = collision.rigidbody; // attach joint to collision object, which is spring shoes
+
+            springShoes = true; // set spring shoes on character to true
+
+            if (springShoesCount == 5)
+            {
+                Destroy(collision.gameObject); // doesn't work rn, won't destroy
+            }
             
             //Jump(); // directly call jump 6 times for powwer-up lifespan
             //for (int i = 0; i < 6; i++)

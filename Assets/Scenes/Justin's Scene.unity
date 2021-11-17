@@ -158,6 +158,7 @@ MonoBehaviour:
   rb: {fileID: 138362646}
   moveSpeed: 2
   jumpPower: 3
+  springShoesCount: 0
   joint: {fileID: 0}
   platform: {fileID: 0}
 --- !u!58 &138362645
@@ -1134,7 +1135,7 @@ SpriteShapeRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -1324,7 +1325,7 @@ SpriteShapeRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
