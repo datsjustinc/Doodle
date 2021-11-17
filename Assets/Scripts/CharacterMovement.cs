@@ -10,10 +10,14 @@ public class CharacterMovement : MonoBehaviour
     bool spring = false; // create control variable for power-up
     bool trampoline = false; // create control variable for power-up
     bool springShoes = false; // create control variable for power-up
+    bool isGround = true; // create control variable for ground
+    bool regularPlatform = false; // create control variable for platform
+    bool horizontalPlatform = false; // create control variable for platform
     public int springShoesCount = 0; // create variable to keep track of shoes lifespan
     float moveX = 1.0f; // create value to store object's move direction
     public Joint2D joint; // create variable to store joint component used to attach character to spring shoe power-up
-    public GroundComponent platform; // create variable to store script GroundComponent in Platform object
+    public GroundComponent ground; // create variable to store script GroundComponent in Platform object
+
 
 
     private void Awake()
@@ -21,14 +25,20 @@ public class CharacterMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>(); // get rigid body component of object
         canJump = true; // set character to bounce at start of game
         rb.freezeRotation = true; // set character to not rotate
-        platform = GameObject.Find("Platform").GetComponent<GroundComponent>(); // gets platform object
+        ground = GameObject.Find("Ground").GetComponent<GroundComponent>(); // gets platform object
     }
 
     void PlayerControls()
     {
-        if (spring) // if key pressed
+        if (Input.GetKeyDown(KeyCode.Space) && isGround == true) // if key pressed
         {
             jumpPower = 8.0f; // boost jump power from power-up
+            canJump = true; // set jump to true
+        }
+
+        if (spring) // if key pressed
+        {
+            jumpPower = 12.0f; // boost jump power from power-up
             canJump = true; // set jump to true
             spring = false; // set spring bounce to false so it can be triggered again
         }
@@ -36,31 +46,45 @@ public class CharacterMovement : MonoBehaviour
         if (trampoline) // if key pressed
         {
             rb.freezeRotation = false; // allow character to rotate
-            jumpPower = 8.0f; // boost jump power from power-up
+            jumpPower = 12.0f; // boost jump power from power-up
             canJump = true; // set jump to true
             trampoline = false; // set spring bounce to false so it can be triggered again
         }
 
         if (springShoes) // this could be the springShoesCount, and start from range(6, 0), then reset to 6
         {
-            if (platform.isGrounded == true) // if spring shoes object has touched the platform
+            if (ground.isGrounded == true) // if spring shoes object has touched the platform
             {
-                jumpPower = 15.0f; // boost jump power from power-up
+                jumpPower = 12.0f; // boost jump power from power-up
                 Jump(); // skip directly to character jump
                 springShoesCount += 1;  // keep track of spring shoes jump amount
-                platform.isGrounded = false; // reset jump once character jumps
+                ground.isGrounded = false; // reset jump once character jumps
 
                 if (springShoesCount >= 6) // if spring shoes object has reached its max use/lifespan
                 {
                     springShoes = false; // stop the power-up
                     springShoesCount = 0; // reset power-up jump amount
 
-                    if (platform.isGrounded == false)
+                    if (ground.isGrounded == false)
                     {
                         Destroy(joint); // breaks spring shoes from character
                     }
                 }
             }
+        }
+
+        if (regularPlatform) // if key pressed
+        {
+            jumpPower = 8.0f; // boost jump power from power-up
+            canJump = true; // set jump to true
+            regularPlatform = false; // reset bounce
+        }
+
+        if (horizontalPlatform) // if key pressed
+        {
+            jumpPower = 8.0f; // boost jump power from power-up
+            canJump = true; // set jump to true
+            horizontalPlatform = false; // reset bounce
         }
 
         moveX = Input.GetAxis("Horizontal"); // get movement input direction (-1, 1)
@@ -77,7 +101,7 @@ public class CharacterMovement : MonoBehaviour
     void Jump()
     {
         rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse); // make object jump
-        jumpPower = 3.0f; // reset jump power to default value
+        jumpPower = 8.0f; // reset jump power to default value
     }
 
     private void OnCollisionEnter2D(Collision2D collision) 
@@ -87,6 +111,8 @@ public class CharacterMovement : MonoBehaviour
 
         if (collision.gameObject.tag == "Spring") // if collision with spring power-up
         {   
+            rb.freezeRotation = true; // reset character rotation back to freeze
+            rb.rotation = 0.0f; 
             spring = true; // set spring bounce to true
             //Destroy(collision.gameObject); 
         }
@@ -97,7 +123,7 @@ public class CharacterMovement : MonoBehaviour
             //Destroy(collision.gameObject); 
         }
 
-        if (collision.gameObject.tag == "Platform") // if collision with platform power-up
+        if (collision.gameObject.tag == "ground") // if collision with platform power-up
         {
             rb.freezeRotation = true; // reset character rotation back to freeze
             rb.rotation = 0.0f;
@@ -123,6 +149,22 @@ public class CharacterMovement : MonoBehaviour
             //Jump(); // directly call jump 6 times for powwer-up lifespan
             //for (int i = 0; i < 6; i++)
         
+        }
+
+        if (collision.gameObject.tag == "RegularPlatform") // if collision with platform power-up
+        {
+            rb.freezeRotation = true; // reset character rotation back to freeze
+            rb.rotation = 0.0f;
+
+            regularPlatform = true; // set to bounce
+        }
+
+        if (collision.gameObject.tag == "HorizontalPlatform") // if collision with platform power-up
+        {
+            rb.freezeRotation = true; // reset character rotation back to freeze
+            rb.rotation = 0.0f;
+
+            horizontalPlatform = true; // set to bounce
         }
 
     }
