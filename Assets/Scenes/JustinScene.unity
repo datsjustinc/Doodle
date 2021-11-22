@@ -160,7 +160,7 @@ MonoBehaviour:
   jumpPower: 3
   springShoesCount: 0
   joint: {fileID: 0}
-  platform: {fileID: 0}
+  platform: {fileID: 523793067}
 --- !u!58 &138362645
 CircleCollider2D:
   m_ObjectHideFlags: 0

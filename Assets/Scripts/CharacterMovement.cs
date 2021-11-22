@@ -16,7 +16,7 @@ public class CharacterMovement : MonoBehaviour
     public int springShoesCount = 0; // create variable to keep track of shoes lifespan
     float moveX = 1.0f; // create value to store object's move direction
     public Joint2D joint; // create variable to store joint component used to attach character to spring shoe power-up
-    public GroundComponent ground; // create variable to store script GroundComponent in Platform object
+    public GroundComponent platform; // create variable to store script GroundComponent in Platform object
 
 
 
@@ -25,7 +25,7 @@ public class CharacterMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>(); // get rigid body component of object
         canJump = true; // set character to bounce at start of game
         rb.freezeRotation = true; // set character to not rotate
-        ground = GameObject.Find("Ground").GetComponent<GroundComponent>(); // gets platform object
+        platform = GameObject.Find("Platform").GetComponent<GroundComponent>(); // gets platform object
     }
 
     void PlayerControls()
@@ -53,19 +53,19 @@ public class CharacterMovement : MonoBehaviour
 
         if (springShoes) // this could be the springShoesCount, and start from range(6, 0), then reset to 6
         {
-            if (ground.isGrounded == true) // if spring shoes object has touched the platform
+            if (platform.isGrounded == true) // if spring shoes object has touched the platform
             {
                 jumpPower = 12.0f; // boost jump power from power-up
                 Jump(); // skip directly to character jump
                 springShoesCount += 1;  // keep track of spring shoes jump amount
-                ground.isGrounded = false; // reset jump once character jumps
+                platform.isGrounded = false; // reset jump once character jumps
 
                 if (springShoesCount >= 6) // if spring shoes object has reached its max use/lifespan
                 {
                     springShoes = false; // stop the power-up
                     springShoesCount = 0; // reset power-up jump amount
 
-                    if (ground.isGrounded == false)
+                    if (platform.isGrounded == false)
                     {
                         Destroy(joint); // breaks spring shoes from character
                     }
@@ -123,7 +123,7 @@ public class CharacterMovement : MonoBehaviour
             //Destroy(collision.gameObject); 
         }
 
-        if (collision.gameObject.tag == "ground") // if collision with platform power-up
+        if (collision.gameObject.tag == "Platform") // if collision with platform power-up
         {
             rb.freezeRotation = true; // reset character rotation back to freeze
             rb.rotation = 0.0f;
