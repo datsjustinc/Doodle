@@ -6,13 +6,16 @@ public class CharacterMovement : MonoBehaviour
 {
     public Rigidbody2D rb; // create field variable for object's rigid body component
     public float moveSpeed, jumpPower = 3.0f; // create and intialize object's move and jump values
-    bool canJump = true; // create control variable for object's jump
+    public bool canJump = true; // create control variable for object's jump
     bool spring = false; // create control variable for power-up
     bool trampoline = false; // create control variable for power-up
     bool springShoes = false; // create control variable for power-up
+    bool propellorHat = false; // create control variable for power-up
+    public GameObject springShoes_obj; // create variable to store spring object
+    public GameObject propellorHat_obj; // create variable to store spring object
     bool isGround = true; // create control variable for ground
-    bool regularPlatform = false; // create control variable for platform
-    bool horizontalPlatform = false; // create control variable for platform
+    public bool regularPlatform = false; // create control variable for platform
+    public bool horizontalPlatform = false; // create control variable for platform
     public int springShoesCount = 0; // create variable to keep track of shoes lifespan
     float moveX = 1.0f; // create value to store object's move direction
     public Joint2D joint; // create variable to store joint component used to attach character to spring shoe power-up
@@ -45,7 +48,6 @@ public class CharacterMovement : MonoBehaviour
 
         if (trampoline) // if key pressed
         {
-            rb.freezeRotation = false; // allow character to rotate
             jumpPower = 12.0f; // boost jump power from power-up
             canJump = true; // set jump to true
             trampoline = false; // set spring bounce to false so it can be triggered again
@@ -68,10 +70,20 @@ public class CharacterMovement : MonoBehaviour
                     if (platform.isGrounded == false)
                     {
                         Destroy(joint); // breaks spring shoes from character
+                        Destroy(springShoes_obj); // destroy spring object
                     }
                 }
             }
         }
+
+
+        if (propellorHat) // if key pressed
+        {
+            jumpPower = 12.0f; // boost jump power from power-up
+            canJump = true; // set jump to true
+            propellorHat = false; // reset bounce
+        }
+        
 
         if (regularPlatform) // if key pressed
         {
@@ -109,7 +121,7 @@ public class CharacterMovement : MonoBehaviour
         spring = false; // just in case, all power-up collision variables are set to false before comparing collision tag
         trampoline = false; // just in case, all power-up collision variables are set to false before comparing collision tag
 
-        if (collision.gameObject.tag == "Spring") // if collision with spring power-up
+        if (collision.gameObject.tag == "Spring" && rb.velocity.y < 0.1) // if collision with spring power-up
         {   
             rb.freezeRotation = true; // reset character rotation back to freeze
             rb.rotation = 0.0f; 
@@ -117,19 +129,20 @@ public class CharacterMovement : MonoBehaviour
             //Destroy(collision.gameObject); 
         }
 
-        if (collision.gameObject.tag == "Trampoline") // if collision with trampoline power-up
+        if (collision.gameObject.tag == "Trampoline" && rb.velocity.y < 0.1) // if collision with trampoline power-up
         {
+            rb.freezeRotation = false; // allow character to rotate
             trampoline = true; // set spring bounce to true
             //Destroy(collision.gameObject); 
         }
 
-        if (collision.gameObject.tag == "Platform") // if collision with platform power-up
+        if (collision.gameObject.tag == "Platform" && rb.velocity.y < 0.1) // if collision with platform power-up
         {
             rb.freezeRotation = true; // reset character rotation back to freeze
             rb.rotation = 0.0f;
         }
 
-        if (collision.gameObject.tag == "SpringShoes") // if collision with spring shoe power-up
+        if (collision.gameObject.tag == "SpringShoes" && rb.velocity.y < 0.1) // if collision with spring shoe power-up
         {
             rb.freezeRotation = true; // reset character rotation back to freeze
             rb.rotation = 0.0f; 
@@ -141,17 +154,24 @@ public class CharacterMovement : MonoBehaviour
 
             springShoes = true; // set spring shoes on character to true
 
-            if (springShoesCount == 5)
-            {
-                Destroy(collision.gameObject); // doesn't work rn, won't destroy
-            }
-            
-            //Jump(); // directly call jump 6 times for powwer-up lifespan
-            //for (int i = 0; i < 6; i++)
-        
+            springShoes_obj = collision.gameObject; // store collision object
         }
 
-        if (collision.gameObject.tag == "RegularPlatform") // if collision with platform power-up
+        if (collision.gameObject.tag == "PropellorHat" && rb.velocity.y < 0.1) // if collision with spring shoe power-up
+        {
+            rb.freezeRotation = true; // reset character rotation back to freeze
+            rb.rotation = 0.0f; 
+            
+            joint = gameObject.AddComponent<FixedJoint2D>(); // create new fixed joint component on character
+            joint.connectedBody = collision.rigidbody; // attach joint to collision object, which is spring shoes
+
+            collision.transform.position = new Vector3(transform.position.x, transform.position.y + 0.58f, transform.position.z);
+
+            propellorHat = true; // set propellor hat on character to true
+            propellorHat_obj = collision.gameObject; // store collision object
+        }
+
+        if (collision.gameObject.tag == "RegularPlatform" && rb.velocity.y < 0.1) // if collision with platform power-up
         {
             rb.freezeRotation = true; // reset character rotation back to freeze
             rb.rotation = 0.0f;
@@ -159,7 +179,7 @@ public class CharacterMovement : MonoBehaviour
             regularPlatform = true; // set to bounce
         }
 
-        if (collision.gameObject.tag == "HorizontalPlatform") // if collision with platform power-up
+        if (collision.gameObject.tag == "HorizontalPlatform" && rb.velocity.y < 0.1) // if collision with platform power-up
         {
             rb.freezeRotation = true; // reset character rotation back to freeze
             rb.rotation = 0.0f;
@@ -171,6 +191,16 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (transform.position.x < -8.9f)
+        {
+            transform.position = new Vector3(8.9f, transform.position.y, transform.position.z);
+        }
+        
+        else if (transform.position.x > 8.9f)
+        {
+            transform.position = new Vector3(-8.9f, transform.position.y, transform.position.z);
+        }
+
         rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y); // update object movement speed/direction
 
         if (canJump)

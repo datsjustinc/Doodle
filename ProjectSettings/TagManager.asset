@@ -10,6 +10,11 @@ TagManager:
   - Trampoline
   - SpringShoes
   - Platform
+  - Bullet
+  - HorizontalPlatform
+  - Monster
+  - RegularPlatform
+  - PropellorHat
   layers:
   - Default
   - TransparentFX
