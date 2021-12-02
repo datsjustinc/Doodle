@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb6ee5c4986218042be4aa329cebe2d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HPlatSpeed: 0.001
+  HPlatSpeed: 0.002
   HPlatX: 1
 --- !u!251 &2441412993106037060
 PlatformEffector2D:

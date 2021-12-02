@@ -4,17 +4,26 @@ using UnityEngine;
 
 public class HorizontalMove : MonoBehaviour
 {
-    public float HPlatSpeed = 8.0f;
-    public float HPlatX = 1.0f;
+    // public float HPlatSpeed = 8.0f;
+    // public float HPlatX = 1.0f;
+
+    public float HPlatSpeed;
+    public float HPlatX;
     bool moveRight = true;
 
-   
+    void Start()
+    {   
+        HPlatSpeed = Random.Range(0.002f, 0.003f);
+        HPlatX = Random.Range(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x + 1f, Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x - 1f); // gets random x value within screen size
+    }
     void Update()
     {
-        if(transform.position.x >10){
+        if(transform.position.x > Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x - 1f)
+        {
             moveRight = false;
         }
-        if(transform.position.x < -11){
+        if(transform.position.x < Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x + 1f)
+        {
             moveRight = true;
         }
 

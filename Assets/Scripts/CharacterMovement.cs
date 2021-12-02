@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     public Rigidbody2D rb; // create field variable for object's rigid body component
-    public float moveSpeed, jumpPower = 3.0f; // create and intialize object's move and jump values
+    public float moveSpeed, jumpPower = 12.0f; // create and intialize object's move and jump values
     public bool canJump = true; // create control variable for object's jump
     bool spring = false; // create control variable for power-up
     bool trampoline = false; // create control variable for power-up
@@ -35,20 +35,20 @@ public class CharacterMovement : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGround == true) // if key pressed
         {
-            jumpPower = 8.0f; // boost jump power from power-up
+            jumpPower = 12.0f; // boost jump power from power-up
             canJump = true; // set jump to true
         }
 
         if (spring) // if key pressed
         {
-            jumpPower = 12.0f; // boost jump power from power-up
+            jumpPower = 16.0f; // boost jump power from power-up
             canJump = true; // set jump to true
             spring = false; // set spring bounce to false so it can be triggered again
         }
 
         if (trampoline) // if key pressed
         {
-            jumpPower = 12.0f; // boost jump power from power-up
+            jumpPower = 16.0f; // boost jump power from power-up
             canJump = true; // set jump to true
             trampoline = false; // set spring bounce to false so it can be triggered again
         }
@@ -57,7 +57,7 @@ public class CharacterMovement : MonoBehaviour
         {
             if (platform.isGrounded == true) // if spring shoes object has touched the platform
             {
-                jumpPower = 12.0f; // boost jump power from power-up
+                jumpPower = 16.0f; // boost jump power from power-up
                 Jump(); // skip directly to character jump
                 springShoesCount += 1;  // keep track of spring shoes jump amount
                 platform.isGrounded = false; // reset jump once character jumps
@@ -79,7 +79,7 @@ public class CharacterMovement : MonoBehaviour
 
         if (propellorHat) // if key pressed
         {
-            jumpPower = 12.0f; // boost jump power from power-up
+            jumpPower = 16.0f; // boost jump power from power-up
             canJump = true; // set jump to true
             propellorHat = false; // reset bounce
         }
@@ -87,14 +87,14 @@ public class CharacterMovement : MonoBehaviour
 
         if (regularPlatform) // if key pressed
         {
-            jumpPower = 8.0f; // boost jump power from power-up
+            jumpPower = 12.0f; // boost jump power from power-up
             canJump = true; // set jump to true
             regularPlatform = false; // reset bounce
         }
 
         if (horizontalPlatform) // if key pressed
         {
-            jumpPower = 8.0f; // boost jump power from power-up
+            jumpPower = 12.0f; // boost jump power from power-up
             canJump = true; // set jump to true
             horizontalPlatform = false; // reset bounce
         }
@@ -113,10 +113,15 @@ public class CharacterMovement : MonoBehaviour
     void Jump()
     {
         rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse); // make object jump
-        jumpPower = 8.0f; // reset jump power to default value
+        jumpPower = 12.0f; // reset jump power to default value
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        OnCollisionEnter2D(collision, "PropellorHat");
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision, string v) 
     {
         spring = false; // just in case, all power-up collision variables are set to false before comparing collision tag
         trampoline = false; // just in case, all power-up collision variables are set to false before comparing collision tag
@@ -157,7 +162,7 @@ public class CharacterMovement : MonoBehaviour
             springShoes_obj = collision.gameObject; // store collision object
         }
 
-        if (collision.gameObject.tag == "PropellorHat" && rb.velocity.y < 0.1) // if collision with spring shoe power-up
+        if (collision.gameObject.tag == v && rb.velocity.y < 0.1) // if collision with spring shoe power-up
         {
             rb.freezeRotation = true; // reset character rotation back to freeze
             rb.rotation = 0.0f; 
@@ -189,16 +194,22 @@ public class CharacterMovement : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter2D(Collider2D collision) 
+    {
+
+    }
+        
+
     private void FixedUpdate()
     {
-        if (transform.position.x < -8.9f)
+        if (transform.position.x < -5f)
         {
-            transform.position = new Vector3(8.9f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(5f, transform.position.y, transform.position.z);
         }
         
-        else if (transform.position.x > 8.9f)
+        else if (transform.position.x > 5f)
         {
-            transform.position = new Vector3(-8.9f, transform.position.y, transform.position.z);
+            transform.position = new Vector3(-5f, transform.position.y, transform.position.z);
         }
 
         rb.velocity = new Vector2(moveX * moveSpeed, rb.velocity.y); // update object movement speed/direction

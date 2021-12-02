@@ -25,7 +25,7 @@ public class CameraMove : MonoBehaviour
   {
       Vector3 playerPosition = player.position + offset; // create and store target position values including offset difference
 
-      Vector3 boundPosition = new Vector3(Mathf.Clamp(playerPosition.x, minValue.x, maxValue.x), Mathf.Clamp(playerPosition.y, minValue.y, maxValue.y), Mathf.Clamp(playerPosition.z, minValue.z, maxValue.z)); // create and store new camera positions with limits to min and max values if out of bounds
+      Vector3 boundPosition = new Vector3(Mathf.Clamp(playerPosition.x, minValue.x, maxValue.x), playerPosition.y, Mathf.Clamp(playerPosition.z, minValue.z, maxValue.z)); // create and store new camera positions with limits to min and max values if out of bounds
 
       Vector3 transitionPosition = Vector3.Lerp(transform.position, boundPosition, transitionFactor*Time.fixedDeltaTime); // create and store camera's new smooth transition position from current positions to new bound positions using lerp
       
