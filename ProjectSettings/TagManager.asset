@@ -15,6 +15,7 @@ TagManager:
   - Monster
   - RegularPlatform
   - PropellorHat
+  - BrokenPlatform
   layers:
   - Default
   - TransparentFX

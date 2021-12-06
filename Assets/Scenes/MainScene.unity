@@ -1022,11 +1022,14 @@ MonoBehaviour:
   canJump: 1
   springShoes_obj: {fileID: 0}
   propellorHat_obj: {fileID: 0}
+  brokenPlatform_obj: {fileID: 533470623036636428, guid: 239d5d09454070e438260273fd894fd0, type: 3}
   regularPlatform: 0
   horizontalPlatform: 0
+  brokenPlatform: 0
   springShoesCount: 0
   joint: {fileID: 0}
   platform: {fileID: 992647116}
+  gameEnd: 0
 --- !u!50 &967251303
 Rigidbody2D:
   serializedVersion: 4
@@ -1219,7 +1222,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
+  m_Color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 0}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1473,8 +1476,11 @@ MonoBehaviour:
   FactorY: 1
   RegularPlatform: {fileID: 6693791360014825390, guid: 680d5bc1afce86a40a176b96bace5239, type: 3}
   HorizontalPlatform: {fileID: 2441412993106037058, guid: aa36452649a672d45a39829480bee6e4, type: 3}
+  BrokenPlatform: {fileID: 533470623036636428, guid: 239d5d09454070e438260273fd894fd0, type: 3}
   platforms: []
   PlayerCharacter: {fileID: 967251300}
+  game: {fileID: 0}
+  check: 1
 --- !u!4 &1753164710
 Transform:
   m_ObjectHideFlags: 0

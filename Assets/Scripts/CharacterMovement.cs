@@ -13,13 +13,16 @@ public class CharacterMovement : MonoBehaviour
     bool propellorHat = false; // create control variable for power-up
     public GameObject springShoes_obj; // create variable to store spring object
     public GameObject propellorHat_obj; // create variable to store spring object
+    public GameObject brokenPlatform_obj; // create variable to store broken platform object
     bool isGround = true; // create control variable for ground
     public bool regularPlatform = false; // create control variable for platform
     public bool horizontalPlatform = false; // create control variable for platform
+    public bool brokenPlatform = false; // create control variable for platform
     public int springShoesCount = 0; // create variable to keep track of shoes lifespan
     float moveX = 1.0f; // create value to store object's move direction
     public Joint2D joint; // create variable to store joint component used to attach character to spring shoe power-up
     public GroundComponent platform; // create variable to store script GroundComponent in Platform object
+    public bool gameEnd = false; // controls whether game ends or not
 
 
 
@@ -99,6 +102,14 @@ public class CharacterMovement : MonoBehaviour
             horizontalPlatform = false; // reset bounce
         }
 
+        if (brokenPlatform) // if key pressed
+        {
+            jumpPower = 0f; // boost jump power from power-up
+            canJump = true; // set jump to true
+            brokenPlatform = false; // reset bounce
+            Destroy(brokenPlatform_obj); // destroy broken platform object
+        }
+
         moveX = Input.GetAxis("Horizontal"); // get movement input direction (-1, 1)
         //MOVEX = Input.GetAxis("Horizontal");
     }
@@ -125,8 +136,10 @@ public class CharacterMovement : MonoBehaviour
     {
         spring = false; // just in case, all power-up collision variables are set to false before comparing collision tag
         trampoline = false; // just in case, all power-up collision variables are set to false before comparing collision tag
+        springShoes = false; // just in case, all power-up collision variables are set to false before comparing collision tag
+        propellorHat = false; // just in case, all power-up collision variables are set to false before comparing collision tag
 
-        if (collision.gameObject.tag == "Spring" && rb.velocity.y < 0.1) // if collision with spring power-up
+        if (collision.gameObject.tag == "Spring" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with spring power-up
         {   
             rb.freezeRotation = true; // reset character rotation back to freeze
             rb.rotation = 0.0f; 
@@ -134,20 +147,20 @@ public class CharacterMovement : MonoBehaviour
             //Destroy(collision.gameObject); 
         }
 
-        if (collision.gameObject.tag == "Trampoline" && rb.velocity.y < 0.1) // if collision with trampoline power-up
+        if (collision.gameObject.tag == "Trampoline" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with trampoline power-up
         {
             rb.freezeRotation = false; // allow character to rotate
             trampoline = true; // set spring bounce to true
             //Destroy(collision.gameObject); 
         }
 
-        if (collision.gameObject.tag == "Platform" && rb.velocity.y < 0.1) // if collision with platform power-up
+        if (collision.gameObject.tag == "Platform" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with platform power-up
         {
             rb.freezeRotation = true; // reset character rotation back to freeze
             rb.rotation = 0.0f;
         }
 
-        if (collision.gameObject.tag == "SpringShoes" && rb.velocity.y < 0.1) // if collision with spring shoe power-up
+        if (collision.gameObject.tag == "SpringShoes" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with spring shoe power-up
         {
             rb.freezeRotation = true; // reset character rotation back to freeze
             rb.rotation = 0.0f; 
@@ -162,7 +175,7 @@ public class CharacterMovement : MonoBehaviour
             springShoes_obj = collision.gameObject; // store collision object
         }
 
-        if (collision.gameObject.tag == v && rb.velocity.y < 0.1) // if collision with spring shoe power-up
+        if (collision.gameObject.tag == "PropellorHat" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with spring shoe power-up
         {
             rb.freezeRotation = true; // reset character rotation back to freeze
             rb.rotation = 0.0f; 
@@ -176,7 +189,7 @@ public class CharacterMovement : MonoBehaviour
             propellorHat_obj = collision.gameObject; // store collision object
         }
 
-        if (collision.gameObject.tag == "RegularPlatform" && rb.velocity.y < 0.1) // if collision with platform power-up
+        if (collision.gameObject.tag == "RegularPlatform" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with platform power-up
         {
             rb.freezeRotation = true; // reset character rotation back to freeze
             rb.rotation = 0.0f;
@@ -184,12 +197,22 @@ public class CharacterMovement : MonoBehaviour
             regularPlatform = true; // set to bounce
         }
 
-        if (collision.gameObject.tag == "HorizontalPlatform" && rb.velocity.y < 0.1) // if collision with platform power-up
+        if (collision.gameObject.tag == "HorizontalPlatform" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with platform power-up
         {
             rb.freezeRotation = true; // reset character rotation back to freeze
             rb.rotation = 0.0f;
 
             horizontalPlatform = true; // set to bounce
+        }
+
+        if (collision.gameObject.tag == "BrokenPlatform" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with platform power-up
+        {
+            rb.freezeRotation = true; // reset character rotation back to freeze
+            rb.rotation = 0.0f;
+
+            brokenPlatform_obj = collision.gameObject; // store collision object
+
+            brokenPlatform = true; // set to bounce
         }
 
     }
@@ -225,6 +248,11 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         PlayerControls(); // call player control function to run and detect movement always
+        //Debug.Log(rb.velocity.y);
+        if (rb.velocity.y < -15.0f)
+        {
+            gameEnd = true;
+        }
     }
 }
 

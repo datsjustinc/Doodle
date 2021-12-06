@@ -11,13 +11,16 @@ public class PlatformGeneration : MonoBehaviour
     public float FactorY = 1f; // distance between each spawned block
     public GameObject RegularPlatform; // stores platform prefab
     public GameObject HorizontalPlatform; // stores platform prefab
+    public GameObject BrokenPlatform; // stores platform prefabq
     public List<GameObject> platforms = new List<GameObject>(); // list to store platform instance ids
     public GameObject PlayerCharacter; // store player object
     GameObject PlatformType; // used to store randomly generated platform type
+    public CharacterMovement game; // used to access variable condition in another script
+    public bool check = true; // control code in update function
 
     void Start()
     {
-
+        game = GameObject.Find("Character").GetComponent<CharacterMovement>(); // get script from game object
     }
     void RandomGeneration()
     {
@@ -28,9 +31,14 @@ public class PlatformGeneration : MonoBehaviour
             PlatformType = RegularPlatform;
         }
 
-        else if (rand >= 60 && rand <= 100)
+        else if (rand >= 60 && rand < 90)
         {
             PlatformType = HorizontalPlatform; 
+        }
+
+        else if (rand >= 90 && rand <= 100)
+        {
+            PlatformType = BrokenPlatform;
         }
 
         if (CurBlocks < MinBlocks)
@@ -56,17 +64,22 @@ public class PlatformGeneration : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (game.gameEnd == true)
         {
             foreach (var x in platforms) // goes through each platform instance in list
             {
                 Destroy(x); // destroy each platform instance
             }
+
+            check = false; // don't run this function again if game is over (code in update function)
         }
     }
 
     void Update()
     {
-        RandomGeneration();
+        if (check)
+        {
+            RandomGeneration();
+        }
     }
 }

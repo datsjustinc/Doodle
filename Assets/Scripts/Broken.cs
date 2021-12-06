@@ -14,7 +14,7 @@ public class Broken : MonoBehaviour
     
     
     private void OnTriggerEnter2D(Collider2D other){
-        if( other.CompareTag("Player")){
+        if( other.CompareTag("Character")){
              gameObject.SetActive(false);
             
            
