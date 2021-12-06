@@ -16,24 +16,31 @@ public class HorizontalMove : MonoBehaviour
         HPlatSpeed = Random.Range(0.0025f, 0.0030f);
         HPlatX = Random.Range(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x + 1f, Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x - 1f); // gets random x value within screen size
     }
-    void Update()
+
+    IEnumerator Move()
     {
-        if(transform.position.x > Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x - 1f)
+        if(transform.position.x >= Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x - 1f)
         {
+            yield return new WaitForSeconds(1f);
             moveRight = false;
         }
-        if(transform.position.x < Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x + 1f)
+        if(transform.position.x <= Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x + 1f)
         {
+            yield return new WaitForSeconds(1f);
             moveRight = true;
         }
 
-        if(moveRight == true){
+        if(moveRight == true)
+        {   
             transform.position = new Vector2(transform.position.x + HPlatSpeed * HPlatX,transform.position.y);
         }
-        if(moveRight == false){
+        if(moveRight == false)
+        {
             transform.position = new Vector2(transform.position.x - HPlatSpeed * HPlatX,transform.position.y);
         }
-
-        
+    }
+    void Update()
+    {
+        StartCoroutine(Move());
     }
 }
