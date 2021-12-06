@@ -1481,6 +1481,12 @@ MonoBehaviour:
   PlayerCharacter: {fileID: 967251300}
   game: {fileID: 0}
   check: 1
+  RegularMin: 0
+  RegularMax: 60
+  HorizontalMin: 60
+  HorizontalMax: 90
+  BrokenMin: 90
+  BrokenMax: 100
 --- !u!4 &1753164710
 Transform:
   m_ObjectHideFlags: 0

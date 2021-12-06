@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlatformGeneration : MonoBehaviour
 {
@@ -11,12 +12,18 @@ public class PlatformGeneration : MonoBehaviour
     public float FactorY = 1f; // distance between each spawned block
     public GameObject RegularPlatform; // stores platform prefab
     public GameObject HorizontalPlatform; // stores platform prefab
-    public GameObject BrokenPlatform; // stores platform prefabq
+    public GameObject BrokenPlatform; // stores platform prefab
     public List<GameObject> platforms = new List<GameObject>(); // list to store platform instance ids
     public GameObject PlayerCharacter; // store player object
     GameObject PlatformType; // used to store randomly generated platform type
     public CharacterMovement game; // used to access variable condition in another script
     public bool check = true; // control code in update function
+    public float RegularMin = 0;
+    public float RegularMax = 60;
+    public float HorizontalMin = 60;
+    public float HorizontalMax = 90;
+    public float BrokenMin = 90;
+    public float BrokenMax = 100;
 
     void Start()
     {
@@ -26,17 +33,17 @@ public class PlatformGeneration : MonoBehaviour
     {
         var rand = Random.Range(0, 100); // decide a random number within range to generate
 
-        if (rand >= 0 && rand < 60)
+        if (rand >= RegularMin && rand < RegularMax)
         {
             PlatformType = RegularPlatform;
         }
 
-        else if (rand >= 60 && rand < 90)
+        else if (rand >= HorizontalMin && rand < HorizontalMax)
         {
             PlatformType = HorizontalPlatform; 
         }
 
-        else if (rand >= 90 && rand <= 100)
+        else if (rand >= BrokenMin && rand <= BrokenMax)
         {
             PlatformType = BrokenPlatform;
         }
@@ -75,11 +82,31 @@ public class PlatformGeneration : MonoBehaviour
         }
     }
 
+    IEnumerator Difficulty()
+    {
+        yield return new WaitForSeconds(20f); // difficulty increases every 10 seconds
+
+        if (RegularMax > 30) // set maximum difficulty amount by setting minimum regular platform requirement
+        {
+            RegularMax -= 2; // chances for a regular platform spawn decrease
+            HorizontalMin -= 2; // chances for a horizontal platform spawn increases
+            HorizontalMax -= 1; // adjust to allow changes for broken platform to increase
+            BrokenMin -= 1; // chances for a broken platform increases
+        }
+    }
+
     void Update()
     {
         if (check)
         {
             RandomGeneration();
+        }
+
+        StartCoroutine(Difficulty());
+
+        if (Input.GetKeyDown(KeyCode.R)) 
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }
