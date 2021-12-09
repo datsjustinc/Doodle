@@ -1001,9 +1001,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: -0.010177374}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.48982263
 --- !u!114 &967251302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1474,10 +1474,15 @@ MonoBehaviour:
   CurBlocks: 0
   StartPositionY: -3.7
   FactorY: 1
+  Spring: {fileID: 3310409887632069661, guid: 1084cb78f0981fa45bb2c1607aaf9172, type: 3}
+  SpringShoes: {fileID: 122486152639127236, guid: 20c1ee9c67606bf4aa7b6356cd485bc6, type: 3}
+  Trampoline: {fileID: 653068826626142680, guid: cdadf7bd26e124a40a1a7e639292329e, type: 3}
+  PropellorHat: {fileID: 7234612568549520233, guid: e52d2d22ad153934387df8b0a440c825, type: 3}
   RegularPlatform: {fileID: 6693791360014825390, guid: 680d5bc1afce86a40a176b96bace5239, type: 3}
   HorizontalPlatform: {fileID: 2441412993106037058, guid: aa36452649a672d45a39829480bee6e4, type: 3}
   BrokenPlatform: {fileID: 533470623036636428, guid: 239d5d09454070e438260273fd894fd0, type: 3}
   platforms: []
+  powerups: []
   PlayerCharacter: {fileID: 967251300}
   game: {fileID: 0}
   check: 1

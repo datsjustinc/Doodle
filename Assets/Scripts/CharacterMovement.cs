@@ -25,13 +25,12 @@ public class CharacterMovement : MonoBehaviour
     public bool gameEnd = false; // controls whether game ends or not
 
 
-
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>(); // get rigid body component of object
         canJump = true; // set character to bounce at start of game
         rb.freezeRotation = true; // set character to not rotate
-        platform = GameObject.Find("Platform").GetComponent<GroundComponent>(); // gets platform object
+        //platform = GameObject.Find("Platform").GetComponent<GroundComponent>(); // gets platform object
     }
 
     void PlayerControls()
@@ -72,7 +71,7 @@ public class CharacterMovement : MonoBehaviour
 
                     if (platform.isGrounded == false)
                     {
-                        Destroy(joint); // breaks spring shoes from character
+                        //Destroy(joint); // breaks spring shoes from character
                         Destroy(springShoes_obj); // destroy spring object
                     }
                 }
@@ -149,7 +148,9 @@ public class CharacterMovement : MonoBehaviour
 
         if (collision.gameObject.tag == "Trampoline" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with trampoline power-up
         {
-            rb.freezeRotation = false; // allow character to rotate
+            //rb.freezeRotation = false; // allow character to rotate
+            rb.freezeRotation = true; // reset character rotation back to freeze
+            rb.rotation = 0.0f; 
             trampoline = true; // set spring bounce to true
             //Destroy(collision.gameObject); 
         }
@@ -167,12 +168,13 @@ public class CharacterMovement : MonoBehaviour
             
             transform.position = new Vector3(collision.transform.position.x, collision.transform.position.y + 0.864327f, collision.transform.position.z);
             
-            joint = gameObject.AddComponent<FixedJoint2D>(); // create new fixed joint component on character
-            joint.connectedBody = collision.rigidbody; // attach joint to collision object, which is spring shoes
+            //joint = gameObject.AddComponent<FixedJoint2D>(); // create new fixed joint component on character
+            //joint.connectedBody = collision.rigidbody; // attach joint to collision object, which is spring shoes
 
             springShoes = true; // set spring shoes on character to true
-
             springShoes_obj = collision.gameObject; // store collision object
+
+            springShoes_obj.transform.SetParent(transform);
         }
 
         if (collision.gameObject.tag == "PropellorHat" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with spring shoe power-up
@@ -180,13 +182,15 @@ public class CharacterMovement : MonoBehaviour
             rb.freezeRotation = true; // reset character rotation back to freeze
             rb.rotation = 0.0f; 
             
-            joint = gameObject.AddComponent<FixedJoint2D>(); // create new fixed joint component on character
-            joint.connectedBody = collision.rigidbody; // attach joint to collision object, which is spring shoes
+            //joint = gameObject.AddComponent<FixedJoint2D>(); // create new fixed joint component on character
+            //joint.connectedBody = collision.rigidbody; // attach joint to collision object, which is spring shoes
 
             collision.transform.position = new Vector3(transform.position.x, transform.position.y + 0.58f, transform.position.z);
 
             propellorHat = true; // set propellor hat on character to true
             propellorHat_obj = collision.gameObject; // store collision object
+
+            propellorHat_obj.transform.SetParent(transform);
         }
 
         if (collision.gameObject.tag == "RegularPlatform" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with platform power-up
@@ -195,6 +199,8 @@ public class CharacterMovement : MonoBehaviour
             rb.rotation = 0.0f;
 
             regularPlatform = true; // set to bounce
+
+            platform = collision.gameObject.GetComponent<GroundComponent>(); // gets platform object
         }
 
         if (collision.gameObject.tag == "HorizontalPlatform" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with platform power-up
@@ -203,6 +209,8 @@ public class CharacterMovement : MonoBehaviour
             rb.rotation = 0.0f;
 
             horizontalPlatform = true; // set to bounce
+
+            platform = collision.gameObject.GetComponent<GroundComponent>(); // gets platform object
         }
 
         if (collision.gameObject.tag == "BrokenPlatform" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with platform power-up

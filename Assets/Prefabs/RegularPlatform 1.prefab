@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6693791360014825385}
   - component: {fileID: 6693791360014825384}
   - component: {fileID: 6693791360014825391}
+  - component: {fileID: -650135023510767293}
   m_Layer: 0
   m_Name: RegularPlatform 1
   m_TagString: RegularPlatform
@@ -26,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6693791360014825390}
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: -0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: -6.11, y: 0.48, z: 2.177098}
   m_LocalScale: {x: 0.23179922, y: 0.60029256, z: 1}
   m_Children: []
@@ -127,3 +128,16 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!114 &-650135023510767293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6693791360014825390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0140261b96335a45b97da5dba316429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrounded: 0

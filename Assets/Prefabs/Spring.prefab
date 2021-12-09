@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3310409887632069649}
   - component: {fileID: 3310409887632069648}
   - component: {fileID: 3310409887632069651}
+  - component: {fileID: -303367815298546955}
   m_Layer: 0
   m_Name: Spring
   m_TagString: Spring
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3310409887632069661}
   m_LocalRotation: {x: -0, y: -0, z: -0.70620453, w: 0.708008}
   m_LocalPosition: {x: -5.97983, y: -0.40005875, z: 0.4374176}
-  m_LocalScale: {x: 0.15449998, y: 0.7618999, z: 1}
+  m_LocalScale: {x: 0.15449998, y: 0.4618999, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -163,8 +164,27 @@ CircleCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_UsedByComposite: 0
   m_Offset: {x: -0.052802354, y: 0.13774835}
   serializedVersion: 2
   m_Radius: 0.49570477
+--- !u!251 &-303367815298546955
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3310409887632069661}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 89.854
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1

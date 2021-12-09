@@ -11,6 +11,9 @@ public class HorizontalMove : MonoBehaviour
     public float HPlatX;
     bool moveRight = true;
 
+    Vector2 CurrentPosition;
+    Vector2 EndPosition;
+
     void Start()
     {   
         HPlatSpeed = Random.Range(0.0025f, 0.0030f);
@@ -32,11 +35,15 @@ public class HorizontalMove : MonoBehaviour
 
         if(moveRight == true)
         {   
+            
             transform.position = new Vector2(transform.position.x + HPlatSpeed * HPlatX,transform.position.y);
+            //transform.position = Vector2.Lerp((transform.position.x, transform.position.x + HPlatSpeed * HPlatX, 1.0f * Time.fixedDeltaTime));
         }
+
         if(moveRight == false)
         {
             transform.position = new Vector2(transform.position.x - HPlatSpeed * HPlatX,transform.position.y);
+            //transform.position = Vector2.Lerp((transform.position.x, transform.position.x - HPlatSpeed * HPlatX, 1.0f * Time.fixedDeltaTime));
         }
     }
     void Update()
