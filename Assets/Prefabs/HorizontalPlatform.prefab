@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 2441412993106037060}
   - component: {fileID: 2441412993106037059}
   - component: {fileID: -2833958324861624692}
+  - component: {fileID: 3151824838200936065}
   m_Layer: 0
   m_Name: HorizontalPlatform
   m_TagString: HorizontalPlatform
@@ -159,3 +160,16 @@ MonoBehaviour:
   startPos: {x: -4, y: 0, z: 0}
   endPos: {x: 4, y: 0, z: 0}
   speed: 1
+--- !u!114 &3151824838200936065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2441412993106037058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0140261b96335a45b97da5dba316429, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isGrounded: 0
