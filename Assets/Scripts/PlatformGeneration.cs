@@ -75,6 +75,11 @@ public class PlatformGeneration : MonoBehaviour
             PowerupType = PropellorHat; 
         }
 
+        else
+        {
+            PowerupType = null; 
+        }
+
         if (CurBlocks < MinBlocks)
         {
             float random_xfactor = Random.Range(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x + 1f, Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x - 1f); // gets random x value within screen size
