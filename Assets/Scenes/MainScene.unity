@@ -1023,13 +1023,12 @@ MonoBehaviour:
   springShoes_obj: {fileID: 0}
   propellorHat_obj: {fileID: 0}
   brokenPlatform_obj: {fileID: 533470623036636428, guid: 239d5d09454070e438260273fd894fd0, type: 3}
-  SpringShoesJump: 0
   regularPlatform: 0
   horizontalPlatform: 0
   brokenPlatform: 0
   springShoesCount: 0
   joint: {fileID: 0}
-  ground: {fileID: 0}
+  platform: {fileID: 992647116}
   gameEnd: 0
 --- !u!50 &967251303
 Rigidbody2D:
@@ -1154,6 +1153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0140261b96335a45b97da5dba316429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isGrounded: 0
 --- !u!61 &992647117
 BoxCollider2D:
   m_ObjectHideFlags: 0

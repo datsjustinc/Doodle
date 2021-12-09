@@ -14,14 +14,14 @@ public class CharacterMovement : MonoBehaviour
     public GameObject springShoes_obj; // create variable to store spring object
     public GameObject propellorHat_obj; // create variable to store spring object
     public GameObject brokenPlatform_obj; // create variable to store broken platform object
-    public bool SpringShoesJump = false; // create control variable for power-up jump
+    bool isGround = true; // create control variable for ground
     public bool regularPlatform = false; // create control variable for platform
     public bool horizontalPlatform = false; // create control variable for platform
     public bool brokenPlatform = false; // create control variable for platform
     public int springShoesCount = 0; // create variable to keep track of shoes lifespan
     float moveX = 1.0f; // create value to store object's move direction
     public Joint2D joint; // create variable to store joint component used to attach character to spring shoe power-up
-    public GroundComponent ground; // create variable to store script GroundComponent in Platform object
+    public GroundComponent platform; // create variable to store script GroundComponent in Platform object
     public bool gameEnd = false; // controls whether game ends or not
 
 
@@ -35,7 +35,7 @@ public class CharacterMovement : MonoBehaviour
 
     void PlayerControls()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) // if key pressed
+        if (Input.GetKeyDown(KeyCode.Space) && isGround == true) // if key pressed
         {
             jumpPower = 12.0f; // boost jump power from power-up
             canJump = true; // set jump to true
@@ -55,20 +55,26 @@ public class CharacterMovement : MonoBehaviour
             trampoline = false; // set spring bounce to false so it can be triggered again
         }
 
-        if (springShoes && SpringShoesJump) // this could be the springShoesCount, and start from range(6, 0), then reset to 6
-        {          
-            jumpPower = 16.0f; // boost jump power from power-up
-            Jump(); // skip directly to character jump
-            springShoesCount += 1;  // keep track of spring shoes jump amount
-            SpringShoesJump = false; // reset jump once character jumps
-
-            if (springShoesCount >= 6) // if spring shoes object has reached its max use/lifespan
+        if (springShoes) // this could be the springShoesCount, and start from range(6, 0), then reset to 6
+        {
+            if (platform.isGrounded == true) // if spring shoes object has touched the platform
             {
-                springShoes = false; // stop the power-up
-                springShoesCount = 0; // reset power-up jump amount
+                jumpPower = 16.0f; // boost jump power from power-up
+                Jump(); // skip directly to character jump
+                springShoesCount += 1;  // keep track of spring shoes jump amount
+                platform.isGrounded = false; // reset jump once character jumps
 
-                //Destroy(joint); // breaks spring shoes from character
-                Destroy(springShoes_obj); // destroy spring object
+                if (springShoesCount >= 6) // if spring shoes object has reached its max use/lifespan
+                {
+                    springShoes = false; // stop the power-up
+                    springShoesCount = 0; // reset power-up jump amount
+
+                    if (platform.isGrounded == false)
+                    {
+                        //Destroy(joint); // breaks spring shoes from character
+                        Destroy(springShoes_obj); // destroy spring object
+                    }
+                }
             }
         }
 
@@ -120,7 +126,12 @@ public class CharacterMovement : MonoBehaviour
         jumpPower = 12.0f; // reset jump power to default value
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        OnCollisionEnter2D(collision, "PropellorHat");
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision, string v) 
     {
         spring = false; // just in case, all power-up collision variables are set to false before comparing collision tag
         trampoline = false; // just in case, all power-up collision variables are set to false before comparing collision tag
@@ -144,11 +155,11 @@ public class CharacterMovement : MonoBehaviour
             //Destroy(collision.gameObject); 
         }
 
-        // if (collision.gameObject.tag == "Platform" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with platform power-up
-        // {
-        //     rb.freezeRotation = true; // reset character rotation back to freeze
-        //     rb.rotation = 0.0f;
-        // }
+        if (collision.gameObject.tag == "Platform" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with platform power-up
+        {
+            rb.freezeRotation = true; // reset character rotation back to freeze
+            rb.rotation = 0.0f;
+        }
 
         if (collision.gameObject.tag == "SpringShoes" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with spring shoe power-up
         {
@@ -189,7 +200,7 @@ public class CharacterMovement : MonoBehaviour
 
             regularPlatform = true; // set to bounce
 
-            //ground = collision.gameObject.GetComponent<GroundComponent>(); // gets platform object
+            platform = collision.gameObject.GetComponent<GroundComponent>(); // gets platform object
         }
 
         if (collision.gameObject.tag == "HorizontalPlatform" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with platform power-up
@@ -199,7 +210,7 @@ public class CharacterMovement : MonoBehaviour
 
             horizontalPlatform = true; // set to bounce
 
-            //ground = collision.gameObject.GetComponent<GroundComponent>(); // gets platform object
+            platform = collision.gameObject.GetComponent<GroundComponent>(); // gets platform object
         }
 
         if (collision.gameObject.tag == "BrokenPlatform" && rb.velocity.y < 0.1 && gameEnd != true) // if collision with platform power-up

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6693791360014825385}
   - component: {fileID: 6693791360014825384}
   - component: {fileID: 6693791360014825391}
-  - component: {fileID: 1029188665812087860}
+  - component: {fileID: -650135023510767293}
   m_Layer: 0
   m_Name: RegularPlatform 1
   m_TagString: RegularPlatform
@@ -128,7 +128,7 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!114 &1029188665812087860
+--- !u!114 &-650135023510767293
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
