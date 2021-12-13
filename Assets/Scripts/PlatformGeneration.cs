@@ -17,14 +17,19 @@ public class PlatformGeneration : MonoBehaviour
     public GameObject RegularPlatform; // stores platform prefab
     public GameObject HorizontalPlatform; // stores platform prefab
     public GameObject BrokenPlatform; // stores platform prefab
+    public GameObject RegularMonster; // stores platform prefab
+    public GameObject MovingMonster; // stores platform prefab
     public List<GameObject> platforms = new List<GameObject>(); // list to store platform instance ids
     public GameObject[] powerups1; // create array to store powerups
     public GameObject[] powerups2; // create array to store powerups
     public GameObject[] powerups3; // create array to store powerups
+    public GameObject[] RegMonster; // create array to store powerups
+    public GameObject[] MovMonster; // create array to store powerups
     // public List<GameObject> powerups = new List<GameObject>(); // list to store pwer-up instance ids
     public GameObject PlayerCharacter; // store player object
     GameObject PowerupType; // used to store randomly generated power-up type
     GameObject PlatformType; // used to store randomly generated platform type
+    GameObject MonsterType; // used to store randomly generated monster type
     public CharacterMovement game; // used to access variable condition in another script
     public bool check = true; // control code in update function
     public float RegularMin = 0;
@@ -42,6 +47,7 @@ public class PlatformGeneration : MonoBehaviour
     {
         var rand = Random.Range(0, 100); // decide a random number within range to generate
         var rand2 = Random.Range(0, 100); // decide a random number within range to generate
+        var rand3 = Random.Range(0, 100); // decide a random number within range to generate
 
         if (rand >= RegularMin && rand < RegularMax)
         {
@@ -83,6 +89,21 @@ public class PlatformGeneration : MonoBehaviour
             PowerupType = null; 
         }
 
+        if (rand3 > 0 && rand3 < 5)
+        {
+            MonsterType = RegularMonster;
+        }
+
+        else if (rand3 > 95 && rand3 < 100)
+        {
+            MonsterType = MovingMonster;
+        }
+
+        else
+        {
+            MonsterType = null;
+        }
+
         if (CurBlocks < MinBlocks)
         {
             float random_xfactor = Random.Range(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x + 1f, Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x - 1f); // gets random x value within screen size
@@ -90,7 +111,11 @@ public class PlatformGeneration : MonoBehaviour
             StartPositionY += FactorY; // factor to increment next platform y position by
             
             var instance = Instantiate(PlatformType, new Vector3(random_xfactor, StartPositionY, 2.177098f), PlatformType.transform.rotation); // create new platform instance
-           
+            
+            if (PlatformType == RegularPlatform && PowerupType == null && MonsterType != null)
+            {
+                var instance3 = Instantiate(MonsterType, new Vector3(random_xfactor, StartPositionY + 0.5f, 2.177098f), MonsterType.transform.rotation); // create new power-up instance
+            }   
             
             if (PlatformType == RegularPlatform && PowerupType != null)
             {
@@ -129,6 +154,9 @@ public class PlatformGeneration : MonoBehaviour
             powerups2 = GameObject.FindGameObjectsWithTag("SpringShoes");
             powerups3 = GameObject.FindGameObjectsWithTag("PropellorHat");
 
+            RegMonster = GameObject.FindGameObjectsWithTag("RegularMonster");
+            MovMonster = GameObject.FindGameObjectsWithTag("MovingMonster");
+
             foreach (var x in platforms) // goes through each platform instance in list
             {
                 Destroy(x); // destroy each platform instance
@@ -147,6 +175,16 @@ public class PlatformGeneration : MonoBehaviour
             for (int i = 0; i < powerups3.Length; i++)
             {
                 Destroy(powerups3[i]); //destroy all colliders by going through collider list
+            }
+
+            for (int i = 0; i < RegMonster.Length; i++)
+            {
+                Destroy(RegMonster[i]); //destroy all colliders by going through collider list
+            }
+
+            for (int i = 0; i < MovMonster.Length; i++)
+            {
+                Destroy(MovMonster[i]); //destroy all colliders by going through collider list
             }
 
             check = false; // don't run this function again if game is over (code in update function)

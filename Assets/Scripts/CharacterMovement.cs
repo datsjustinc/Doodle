@@ -28,6 +28,7 @@ public class CharacterMovement : MonoBehaviour
     public AudioSource springs;
     public AudioSource trampolines;
     public AudioSource propellor;
+    public AudioSource death;
 
 
     private void Awake()
@@ -239,7 +240,18 @@ public class CharacterMovement : MonoBehaviour
 
             brokenPlatform = true; // set to bounce
         }
+        
+        if (collision.gameObject.tag == "RegularMonster" && gameEnd != true) // if collision with platform power-up
+        {
+            death.Play(); // play sound
+            gameEnd = true;
+        }
 
+        if (collision.gameObject.tag == "MovingMonster" && gameEnd != true) // if collision with platform power-up
+        {
+            death.Play(); // play sound
+            gameEnd = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision) 
@@ -282,6 +294,7 @@ public class CharacterMovement : MonoBehaviour
 
         if (transform.position.y < Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).y - 1f)
         {
+            death.Play(); // play sound
             gameEnd = true;
         }
     }
