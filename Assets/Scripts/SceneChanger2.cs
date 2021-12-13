@@ -10,9 +10,9 @@ public class SceneChanger2 : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        if (Input.GetKeyDown(KeyCode.Return)) 
         {
-            SceneManager.LoadScene(nextScene); // load next scene
+            SceneManager.LoadScene(nextScene); // load next scene (in this case restart scene)
         }
     }
 }
