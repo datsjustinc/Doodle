@@ -18,7 +18,10 @@ public class PlatformGeneration : MonoBehaviour
     public GameObject HorizontalPlatform; // stores platform prefab
     public GameObject BrokenPlatform; // stores platform prefab
     public List<GameObject> platforms = new List<GameObject>(); // list to store platform instance ids
-    public List<GameObject> powerups = new List<GameObject>(); // list to store pwer-up instance ids
+    public GameObject[] powerups1; // create array to store powerups
+    public GameObject[] powerups2; // create array to store powerups
+    public GameObject[] powerups3; // create array to store powerups
+    // public List<GameObject> powerups = new List<GameObject>(); // list to store pwer-up instance ids
     public GameObject PlayerCharacter; // store player object
     GameObject PowerupType; // used to store randomly generated power-up type
     GameObject PlatformType; // used to store randomly generated platform type
@@ -35,7 +38,7 @@ public class PlatformGeneration : MonoBehaviour
     {
         game = GameObject.Find("Character").GetComponent<CharacterMovement>(); // get script from game object
     }
-    void RandomGeneration()
+    IEnumerator RandomGeneration()
     {
         var rand = Random.Range(0, 100); // decide a random number within range to generate
         var rand2 = Random.Range(0, 100); // decide a random number within range to generate
@@ -119,25 +122,44 @@ public class PlatformGeneration : MonoBehaviour
 
         if (game.gameEnd == true)
         {
+            PlayerCharacter.transform.GetComponent<BoxCollider2D>().isTrigger = true; 
+            yield return new WaitForSeconds(3f); // difficulty increases every 3 seconds
+
+            powerups1 = GameObject.FindGameObjectsWithTag("Spring");
+            powerups2 = GameObject.FindGameObjectsWithTag("SpringShoes");
+            powerups3 = GameObject.FindGameObjectsWithTag("PropellorHat");
+
             foreach (var x in platforms) // goes through each platform instance in list
             {
                 Destroy(x); // destroy each platform instance
             }
 
-            /*
-            foreach (var x in powerups) // goes through each platform instance in list
+            for (int i = 0; i < powerups1.Length; i++)
             {
-                Destroy(x); // destroy each platform instance
+                Destroy(powerups1[i]); //destroy all colliders by going through collider list
             }
-            */
+
+            for (int i = 0; i < powerups2.Length; i++)
+            {
+                Destroy(powerups2[i]); //destroy all colliders by going through collider list
+            }
+
+            for (int i = 0; i < powerups3.Length; i++)
+            {
+                Destroy(powerups3[i]); //destroy all colliders by going through collider list
+            }
 
             check = false; // don't run this function again if game is over (code in update function)
+
+            PlayerCharacter.transform.GetComponent<SpriteRenderer>().enabled = false; // make player invisible
+            //Destroy(PlayerCharacter); // runs into issue of end game code error in CameraMove script where if player is gone can't detect player
+
         }
     }
 
     IEnumerator Difficulty()
     {
-        yield return new WaitForSeconds(20f); // difficulty increases every 10 seconds
+        yield return new WaitForSeconds(20f); // difficulty increases every 20 seconds
 
         if (RegularMax > 30) // set maximum difficulty amount by setting minimum regular platform requirement
         {
@@ -152,7 +174,7 @@ public class PlatformGeneration : MonoBehaviour
     {
         if (check)
         {
-            RandomGeneration();
+            StartCoroutine(RandomGeneration());
         }
 
         StartCoroutine(Difficulty());
