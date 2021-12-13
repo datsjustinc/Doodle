@@ -9,13 +9,15 @@ public class MyMonsterScript : MonoBehaviour
     {
         
     }
-
-    private void OnTriggerEnter2D(Collider2D collision){
+    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
         if(collision.CompareTag("Bullet")){
             Destroy(gameObject);
         }
         //Debug.Log("Collide");
     }
+
 
     // Update is called once per frame
     void Update()
