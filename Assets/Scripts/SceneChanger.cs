@@ -12,7 +12,7 @@ public class SceneChanger : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            SceneManager.LoadScene(nextScene); // load next scene
+            SceneManager.LoadScene(nextScene); // load next scene (to main game scene)
         }
     }
 }
