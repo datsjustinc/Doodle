@@ -816,9 +816,6 @@ MonoBehaviour:
   difference: 0
   minValue: {x: 0, y: -4.85, z: -10}
   maxValue: {x: 0, y: 6.36, z: -10}
-  playerMax: 0
-  playerNow: 0
-  game: {fileID: 0}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1138,7 +1135,6 @@ GameObject:
   - component: {fileID: 967251303}
   - component: {fileID: 967251302}
   - component: {fileID: 967251301}
-  - component: {fileID: 967251306}
   m_Layer: 0
   m_Name: Character
   m_TagString: Character
@@ -1153,7 +1149,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 967251300}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -1176,7 +1172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 967251303}
   moveSpeed: 5
-  jumpPower: 16
+  jumpPower: 12
   canJump: 1
   springShoes_obj: {fileID: 0}
   propellorHat_obj: {fileID: 0}
@@ -1185,7 +1181,8 @@ MonoBehaviour:
   horizontalPlatform: 0
   brokenPlatform: 0
   springShoesCount: 0
-  platform: {fileID: 0}
+  joint: {fileID: 0}
+  platform: {fileID: 992647116}
   gameEnd: 0
 --- !u!50 &967251303
 Rigidbody2D:
@@ -1202,7 +1199,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 2
+  m_GravityScale: 1.5
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -1274,32 +1271,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &967251306
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967251300}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!4 &975841273 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 653068826626142681, guid: cdadf7bd26e124a40a1a7e639292329e, type: 3}
@@ -2137,50 +2108,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1592431054
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1592431056}
-  - component: {fileID: 1592431055}
-  m_Layer: 0
-  m_Name: SceneChanger
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1592431055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1592431054}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaa64d64d4c50684087f60b6362fde2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nextScene: StartScene
---- !u!4 &1592431056
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1592431054}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.433611, y: -2.7078624, z: -1.7784995}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1645994989
 Transform:
   m_ObjectHideFlags: 0
@@ -2262,9 +2189,7 @@ MonoBehaviour:
   HorizontalPlatform: {fileID: 4799296577650785060, guid: 81499e4351c0a49bd87a0ef8a04d13f5, type: 3}
   BrokenPlatform: {fileID: 4710613763045522558, guid: f2a9e98b94c9a487593dce701a480e94, type: 3}
   platforms: []
-  powerups1: []
-  powerups2: []
-  powerups3: []
+  powerups: []
   PlayerCharacter: {fileID: 967251300}
   game: {fileID: 0}
   check: 1
