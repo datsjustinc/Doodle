@@ -241,22 +241,23 @@ public class CharacterMovement : MonoBehaviour
             brokenPlatform = true; // set to bounce
         }
         
-        if (collision.gameObject.tag == "RegularMonster" && gameEnd != true) // if collision with platform power-up
-        {
-            death.Play(); // play sound
-            gameEnd = true;
-        }
-
-        if (collision.gameObject.tag == "MovingMonster" && gameEnd != true) // if collision with platform power-up
-        {
-            death.Play(); // play sound
-            gameEnd = true;
-        }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision) 
+    private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.CompareTag("RegularMonster")) // if collision with platform power-up
+        {
+            death.Play(); // play sound
+            gameEnd = true;
+            transform.GetComponent<BoxCollider2D>().isTrigger = true; 
+        }
 
+        if (collision.CompareTag("MovingMonster")) // if collision with platform power-up
+        {
+            death.Play(); // play sound
+            gameEnd = true;
+            transform.GetComponent<BoxCollider2D>().isTrigger = true; 
+        }
     }
         
 
@@ -279,6 +280,7 @@ public class CharacterMovement : MonoBehaviour
             canJump = false; // set this boolean to false so it can be triggered again 
             Jump(); // call jump function to execute
         } 
+
     }
 
     // Update is called once per frame
@@ -296,6 +298,16 @@ public class CharacterMovement : MonoBehaviour
         {
             death.Play(); // play sound
             gameEnd = true;
+        }
+
+        if (moveX == -1)
+        {
+            transform.GetComponent<SpriteRenderer>().flipX = true;
+        }
+
+        else if (moveX == 1)
+        {
+            transform.GetComponent<SpriteRenderer>().flipX = false;
         }
     }
 }
