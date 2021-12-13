@@ -158,9 +158,16 @@ MonoBehaviour:
   rb: {fileID: 138362646}
   moveSpeed: 2
   jumpPower: 3
+  canJump: 1
+  springShoes_obj: {fileID: 0}
+  propellorHat_obj: {fileID: 0}
+  brokenPlatform_obj: {fileID: 0}
+  regularPlatform: 0
+  horizontalPlatform: 0
+  brokenPlatform: 0
   springShoesCount: 0
-  joint: {fileID: 0}
   platform: {fileID: 0}
+  gameEnd: 0
 --- !u!58 &138362645
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1387,3 +1394,60 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
+--- !u!1001 &5805498083789577852
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1049344386118885102, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1049344386118885102, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.132
+      objectReference: {fileID: 0}
+    - target: {fileID: 1049344386118885102, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 1049344386118885102, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1049344386118885102, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1049344386118885102, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1049344386118885102, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1049344386118885102, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1049344386118885102, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1049344386118885102, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1049344386118885102, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3178797489702061672, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
+      propertyPath: m_Name
+      value: SpringShoes
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
