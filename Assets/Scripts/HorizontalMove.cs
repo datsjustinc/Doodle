@@ -16,7 +16,7 @@ public class HorizontalMove : MonoBehaviour
 
     void Start()
     {   
-        HPlatSpeed = Random.Range(0.0025f, 0.0030f);
+        HPlatSpeed = Random.Range(0.0030f, 0.0040f);
         HPlatX = Random.Range(Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).x + 1f, Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, 0)).x - 1f); // gets random x value within screen size
     }
 

@@ -15,6 +15,14 @@ public class GroundComponent : MonoBehaviour
         if (collision.gameObject.tag == "SpringShoes") // if collision with spring shoe power-up
         {
             isGrounded = true;
+            //Debug.Log("Collision");
+        }
+
+        if (collision.gameObject.tag == "Character") // if collision with spring shoe power-up
+        {
+            isGrounded = true;
+            //Debug.Log("Collision");
+            //Debug.Log(isGrounded);
         }
     } 
 
@@ -22,7 +30,7 @@ public class GroundComponent : MonoBehaviour
     {
         if (collision.gameObject.tag == "SpringShoes") // if collision with spring shoe power-up
         {
-            isGrounded = false;
+            //isGrounded = false;
         }
     } 
 
