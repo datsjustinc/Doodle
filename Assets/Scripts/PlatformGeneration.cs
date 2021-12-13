@@ -123,7 +123,7 @@ public class PlatformGeneration : MonoBehaviour
         if (game.gameEnd == true)
         {
             PlayerCharacter.transform.GetComponent<BoxCollider2D>().isTrigger = true; 
-            yield return new WaitForSeconds(2f); // difficulty increases every 3 seconds
+            yield return new WaitForSeconds(2f); // difficulty increases every 2 seconds
 
             powerups1 = GameObject.FindGameObjectsWithTag("Spring");
             powerups2 = GameObject.FindGameObjectsWithTag("SpringShoes");
@@ -152,6 +152,7 @@ public class PlatformGeneration : MonoBehaviour
             check = false; // don't run this function again if game is over (code in update function)
 
             PlayerCharacter.transform.GetComponent<SpriteRenderer>().enabled = false; // make player invisible
+            PlayerCharacter.transform.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll; // freeze player movement
             //Destroy(PlayerCharacter); // runs into issue of end game code error in CameraMove script where if player is gone can't detect player
 
         }

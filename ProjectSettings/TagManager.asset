@@ -16,6 +16,7 @@ TagManager:
   - RegularPlatform
   - PropellorHat
   - BrokenPlatform
+  - Score
   layers:
   - Default
   - TransparentFX
