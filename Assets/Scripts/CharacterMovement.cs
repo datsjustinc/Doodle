@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     public Rigidbody2D rb; // create field variable for object's rigid body component
-    public float moveSpeed, jumpPower = 12.0f; // create and intialize object's move and jump values
+    public float moveSpeed, jumpPower = 16.0f; // create and intialize object's move and jump values
     public bool canJump = true; // create control variable for object's jump
     bool spring = false; // create control variable for power-up
     bool trampoline = false; // create control variable for power-up
@@ -20,60 +20,71 @@ public class CharacterMovement : MonoBehaviour
     public bool brokenPlatform = false; // create control variable for platform
     public int springShoesCount = 0; // create variable to keep track of shoes lifespan
     float moveX = 1.0f; // create value to store object's move direction
-    public Joint2D joint; // create variable to store joint component used to attach character to spring shoe power-up
+    //public Joint2D joint; // create variable to store joint component used to attach character to spring shoe power-up
     public GroundComponent platform; // create variable to store script GroundComponent in Platform object
     public bool gameEnd = false; // controls whether game ends or not
+
+    public AudioSource jump;
+    public AudioSource springs;
+    public AudioSource trampolines;
+    public AudioSource propellor;
+    public AudioSource death;
 
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>(); // get rigid body component of object
-        canJump = true; // set character to bounce at start of game
         rb.freezeRotation = true; // set character to not rotate
-        //platform = GameObject.Find("Platform").GetComponent<GroundComponent>(); // gets platform object
+        // platform = GameObject.Find("Platform").GetComponent<GroundComponent>(); // gets platform object
+        canJump = true; // initial jump of player when game starts
     }
 
-    void PlayerControls()
+    IEnumerator PlayerControls()
     {
         if (Input.GetKeyDown(KeyCode.Space) && isGround == true) // if key pressed
         {
-            jumpPower = 12.0f; // boost jump power from power-up
-            canJump = true; // set jump to true
+            //jumpPower = 14.0f; // boost jump power from power-up
+            //canJump = true; // set jump to true
         }
 
         if (spring) // if key pressed
         {
-            jumpPower = 16.0f; // boost jump power from power-up
+            springs.Play(); // play sound
+            jumpPower = 22.0f; // boost jump power from power-up
             canJump = true; // set jump to true
             spring = false; // set spring bounce to false so it can be triggered again
         }
 
         if (trampoline) // if key pressed
         {
-            jumpPower = 16.0f; // boost jump power from power-up
+            trampolines.Play(); // play sound
+            jumpPower = 22.0f; // boost jump power from power-up
             canJump = true; // set jump to true
             trampoline = false; // set spring bounce to false so it can be triggered again
         }
 
         if (springShoes) // this could be the springShoesCount, and start from range(6, 0), then reset to 6
         {
+            Debug.Log("SpringShoes");
+            Destroy(springShoes_obj); // destroy spring object
             if (platform.isGrounded == true) // if spring shoes object has touched the platform
             {
-                jumpPower = 16.0f; // boost jump power from power-up
+                //Debug.Log(platform.isGrounded);
+                jumpPower = 22.0f; // boost jump power from power-up
                 Jump(); // skip directly to character jump
                 springShoesCount += 1;  // keep track of spring shoes jump amount
-                platform.isGrounded = false; // reset jump once character jumps
+                platform.isGrounded = false;
+                yield return new WaitForSeconds(1f); // difficulty increases every 1 seconds
+                Destroy(springShoes_obj); // destroy spring object
 
                 if (springShoesCount >= 6) // if spring shoes object has reached its max use/lifespan
                 {
                     springShoes = false; // stop the power-up
                     springShoesCount = 0; // reset power-up jump amount
 
-                    if (platform.isGrounded == false)
-                    {
-                        //Destroy(joint); // breaks spring shoes from character
-                        Destroy(springShoes_obj); // destroy spring object
-                    }
+                    //Destroy(joint); // breaks spring shoes from character
+                    Destroy(springShoes_obj); // destroy spring object
+
                 }
             }
         }
@@ -81,22 +92,26 @@ public class CharacterMovement : MonoBehaviour
 
         if (propellorHat) // if key pressed
         {
-            jumpPower = 16.0f; // boost jump power from power-up
+            propellor.Play(); // play sound
+            jumpPower = 50.0f; // boost jump power from power-up
             canJump = true; // set jump to true
             propellorHat = false; // reset bounce
+            yield return new WaitForSeconds(2.5f); // difficulty increases every 2.5 seconds
+            propellor.Stop(); // play sound
+            Destroy(propellorHat_obj); // destroy broken platform object
         }
         
 
         if (regularPlatform) // if key pressed
         {
-            jumpPower = 12.0f; // boost jump power from power-up
+            jumpPower = 16.0f; // boost jump power from power-up
             canJump = true; // set jump to true
             regularPlatform = false; // reset bounce
         }
 
         if (horizontalPlatform) // if key pressed
         {
-            jumpPower = 12.0f; // boost jump power from power-up
+            jumpPower = 16.0f; // boost jump power from power-up
             canJump = true; // set jump to true
             horizontalPlatform = false; // reset bounce
         }
@@ -123,7 +138,8 @@ public class CharacterMovement : MonoBehaviour
     void Jump()
     {
         rb.AddForce(Vector2.up * jumpPower, ForceMode2D.Impulse); // make object jump
-        jumpPower = 12.0f; // reset jump power to default value
+        jump.Play(); // play sound
+        jumpPower = 16.0f; // reset jump power to default value
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -220,9 +236,22 @@ public class CharacterMovement : MonoBehaviour
 
             brokenPlatform_obj = collision.gameObject; // store collision object
 
+            platform.isGrounded = false;
+
             brokenPlatform = true; // set to bounce
         }
+        
+        if (collision.gameObject.tag == "RegularMonster" && gameEnd != true) // if collision with platform power-up
+        {
+            death.Play(); // play sound
+            gameEnd = true;
+        }
 
+        if (collision.gameObject.tag == "MovingMonster" && gameEnd != true) // if collision with platform power-up
+        {
+            death.Play(); // play sound
+            gameEnd = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision) 
@@ -255,12 +284,18 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        PlayerControls(); // call player control function to run and detect movement always
+        StartCoroutine(PlayerControls()); // call player control function to run and detect movement always
         //Debug.Log(rb.velocity.y);
-        if (rb.velocity.y < -15.0f)
+        
+        // if (rb.velocity.y < -15.0f)
+        // {
+        //     gameEnd = true;
+        // }
+
+        if (transform.position.y < Camera.main.ScreenToWorldPoint(new Vector2(0, 0)).y - 1f)
         {
+            death.Play(); // play sound
             gameEnd = true;
         }
     }
 }
-
