@@ -25,9 +25,5 @@ public class MyBulletMove : MonoBehaviour
     void Update()
     {
         MoveObject();
-
-        if (transform.position.y >= 30){
-            Destroy(gameObject);
-        }
     }
 }

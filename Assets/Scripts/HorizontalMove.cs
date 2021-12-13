@@ -35,13 +35,14 @@ public class HorizontalMove : MonoBehaviour
 
         if(moveRight == true)
         {   
-            
+            transform.GetComponent<SpriteRenderer>().flipX = true; // flip sprite
             transform.position = new Vector2(transform.position.x + HPlatSpeed * HPlatX,transform.position.y);
             //transform.position = Vector2.Lerp((transform.position.x, transform.position.x + HPlatSpeed * HPlatX, 1.0f * Time.fixedDeltaTime));
         }
 
         if(moveRight == false)
         {
+            transform.GetComponent<SpriteRenderer>().flipX = false; // flip sprite
             transform.position = new Vector2(transform.position.x - HPlatSpeed * HPlatX,transform.position.y);
             //transform.position = Vector2.Lerp((transform.position.x, transform.position.x - HPlatSpeed * HPlatX, 1.0f * Time.fixedDeltaTime));
         }
