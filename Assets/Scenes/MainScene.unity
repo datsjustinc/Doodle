@@ -1034,7 +1034,7 @@ MonoBehaviour:
   canJump: 1
   springShoes_obj: {fileID: 0}
   propellorHat_obj: {fileID: 0}
-  brokenPlatform_obj: {fileID: 533470623036636428, guid: 239d5d09454070e438260273fd894fd0, type: 3}
+  brokenPlatform_obj: {fileID: 0}
   regularPlatform: 0
   horizontalPlatform: 0
   brokenPlatform: 0

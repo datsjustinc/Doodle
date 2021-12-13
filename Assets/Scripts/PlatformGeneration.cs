@@ -123,7 +123,7 @@ public class PlatformGeneration : MonoBehaviour
         if (game.gameEnd == true)
         {
             PlayerCharacter.transform.GetComponent<BoxCollider2D>().isTrigger = true; 
-            yield return new WaitForSeconds(3f); // difficulty increases every 3 seconds
+            yield return new WaitForSeconds(2f); // difficulty increases every 3 seconds
 
             powerups1 = GameObject.FindGameObjectsWithTag("Spring");
             powerups2 = GameObject.FindGameObjectsWithTag("SpringShoes");
