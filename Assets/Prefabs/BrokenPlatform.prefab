@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 4710613763045522553}
   - component: {fileID: 4710613763045522552}
   - component: {fileID: -765972960542492942}
+  - component: {fileID: 6515978843998740008}
+  - component: {fileID: -5399181060601065503}
   m_Layer: 0
   m_Name: BrokenPlatform
   m_TagString: BrokenPlatform
@@ -145,3 +147,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGrounded: 0
+--- !u!114 &6515978843998740008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4710613763045522558}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 738379418ecb9dd4f95e38bd075134a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cc: {fileID: 4710613763045522553}
+  BrokenSprite: {fileID: 21300000, guid: aed06f74789dd4e76810d7b91ec33e12, type: 3}
+--- !u!50 &-5399181060601065503
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4710613763045522558}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

@@ -22,7 +22,7 @@ public class MyShootingScript : MonoBehaviour
     {
         var xpos = character.transform.position.x;
         var ypos = character.transform.position.y;
-         GameObject b = Instantiate(bullet, new Vector3(xpos, ypos), Quaternion.identity);
+        GameObject b = Instantiate(bullet, new Vector3(xpos, ypos), Quaternion.identity);
          
     }
 
