@@ -1204,11 +1204,11 @@ MonoBehaviour:
   springShoes_obj: {fileID: 0}
   propellorHat_obj: {fileID: 0}
   brokenPlatform_obj: {fileID: 0}
+  isGrounded: 0
   regularPlatform: 0
   horizontalPlatform: 0
   brokenPlatform: 0
   springShoesCount: 0
-  platform: {fileID: 0}
   gameEnd: 0
   jump: {fileID: 967251310}
   springs: {fileID: 967251309}
@@ -1296,7 +1296,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 967251300}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.07, y: -3.98, z: 0}
+  m_LocalPosition: {x: 0.07, y: -4.01, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2227,7 +2227,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0140261b96335a45b97da5dba316429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGrounded: 0
 --- !u!61 &992647117
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2417,7 +2416,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0140261b96335a45b97da5dba316429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGrounded: 0
 --- !u!68 &1094337047
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -2544,7 +2542,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0140261b96335a45b97da5dba316429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGrounded: 0
 --- !u!68 &1096942800
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -2671,7 +2668,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0140261b96335a45b97da5dba316429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGrounded: 0
 --- !u!68 &1143587991
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -3208,10 +3204,10 @@ MonoBehaviour:
   CurBlocks: 0
   StartPositionY: -3.7
   FactorY: 1
-  Spring: {fileID: 6677662559194316456, guid: 93eb175dc0972442ab55d5d0789cdc8e, type: 3}
+  Spring: {fileID: 3178797489702061672, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
   SpringShoes: {fileID: 3178797489702061672, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
-  Trampoline: {fileID: 6567891760869191992, guid: 1ab66ee3580b649249a37ca0f0a3b92a, type: 3}
-  PropellorHat: {fileID: 2129564464010380779, guid: e1cc951949cd841cf892b1d2ae8dce7e, type: 3}
+  Trampoline: {fileID: 3178797489702061672, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
+  PropellorHat: {fileID: 3178797489702061672, guid: 7d3622115c2f54108b79a4f5882395d8, type: 3}
   RegularPlatform: {fileID: 8388028017375071854, guid: 8f6bd5b235f2b47e481ae80cb4ba8c5d, type: 3}
   HorizontalPlatform: {fileID: 4799296577650785060, guid: aa36452649a672d45a39829480bee6e4, type: 3}
   BrokenPlatform: {fileID: 4710613763045522558, guid: f2a9e98b94c9a487593dce701a480e94, type: 3}
@@ -3504,7 +3500,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0140261b96335a45b97da5dba316429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGrounded: 0
 --- !u!68 &1890424443
 EdgeCollider2D:
   m_ObjectHideFlags: 0
@@ -3969,7 +3964,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0140261b96335a45b97da5dba316429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGrounded: 0
 --- !u!68 &2094193936
 EdgeCollider2D:
   m_ObjectHideFlags: 0
